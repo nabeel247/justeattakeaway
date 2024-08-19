@@ -1,0 +1,29 @@
+name: Run Tests
+
+# Trigger the workflow on push to any branch, on a schedule, or manually
+on:
+  push:
+    branches:
+      - '**'  # Runs on push to any branch
+  schedule:
+    - cron: '0 18 * * *'  # Runs every day at 6:00 PM (UTC)
+  workflow_dispatch:  # Allows the workflow to be triggered manually
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Use the appropriate Node.js version
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
